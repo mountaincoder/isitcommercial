@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is it commercial? ESA transfers and breeding loans</title>
+<meta name="description" content="Step through whether moving an ESA-listed animal across state or national lines counts as commercial activity, and whether you may need a USFWS permit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F5F2; --card:#FFFFFF; --ink:#13261F; --muted:#56675F; --line:#D5DDD8;
+  --route:#2F6B4F; --route-soft:#E3EEE7;
+  --clear:#2E7A4E; --clear-soft:#E2F1E7;
+  --caution:#A9481A; --caution-soft:#F8E6DA;
+  --contact:#33539A; --contact-soft:#E2E8F5;
+  --yes:#13261F; --yes-ink:#FFFFFF;
+  --focus:#2F6B4F;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1A16; --card:#16241F; --ink:#E6EEE9; --muted:#9DB0A6; --line:#2A3B34;
+    --route:#7CC39C; --route-soft:#1D3229;
+    --clear:#7CC39C; --clear-soft:#1B3328;
+    --caution:#F0A27A; --caution-soft:#3A2419;
+    --contact:#9DB4EC; --contact-soft:#1E2840;
+    --yes:#E6EEE9; --yes-ink:#0F1A16; --focus:#7CC39C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1A16; --card:#16241F; --ink:#E6EEE9; --muted:#9DB0A6; --line:#2A3B34;
+  --route:#7CC39C; --route-soft:#1D3229;
+  --clear:#7CC39C; --clear-soft:#1B3328;
+  --caution:#F0A27A; --caution-soft:#3A2419;
+  --contact:#9DB4EC; --contact-soft:#1E2840;
+  --yes:#E6EEE9; --yes-ink:#0F1A16; --focus:#7CC39C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--route);text-underline-offset:2px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:720px;margin:0 auto;padding:28px 20px 48px}
+header.site{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+.brand{font-weight:900;font-size:1.05rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--route)}
+.hdr-links{display:flex;gap:16px;font-size:.9rem}
+.hdr-links button{background:none;border:0;padding:0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+
+h1{font-weight:900;font-size:clamp(2.4rem,7vw,3.6rem);line-height:1;letter-spacing:-.035em;margin:0 0 12px}
+.lede{color:var(--muted);max-width:60ch;margin:0 0 32px}
+
+/* Route trail */
+.trail{list-style:none;margin:0 0 4px;padding:0;position:relative}
+.trail li{position:relative;padding:0 0 14px 34px}
+.trail li::before{content:"";position:absolute;left:9px;top:12px;bottom:-2px;width:2px;background:var(--route)}
+.trail li::after{content:"";position:absolute;left:4px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--route)}
+.trail button{all:unset;cursor:pointer;display:block;color:var(--muted);font-size:.93rem;line-height:1.4}
+.trail button:hover .q,.trail button:focus-visible .q{color:var(--ink);text-decoration:underline}
+.trail button:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+.trail .ans{display:inline-block;margin-left:6px;font-weight:700;color:var(--route)}
+
+/* Current step */
+.step{position:relative;padding-left:34px}
+.step::before{content:"";position:absolute;left:0;top:4px;width:20px;height:20px;border-radius:50%;border:3px solid var(--route);background:var(--paper)}
+.stepnum{font-size:.85rem;color:var(--muted);margin:0 0 6px}
+.question{font-weight:700;font-size:clamp(1.45rem,4.2vw,1.9rem);line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;max-width:30ch}
+.hint{color:var(--muted);margin:0 0 20px;max-width:60ch}
+.choices{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.choice{min-width:132px;padding:14px 26px;border-radius:999px;border:2px solid var(--ink);background:transparent;font-weight:700;font-size:1.05rem;cursor:pointer;transition:background .15s,color .15s}
+.choice.yes{background:var(--yes);color:var(--yes-ink)}
+.choice:hover{background:var(--route);border-color:var(--route);color:#fff}
+.choice kbd{font:inherit;font-weight:400;opacity:.6;margin-left:8px;font-size:.85rem}
+
+details.info{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:2px 0}
+details.info summary{cursor:pointer;padding:12px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.info summary::-webkit-details-marker{display:none}
+details.info summary::after{content:"+";font-weight:400;font-size:1.4rem;line-height:1;color:var(--muted)}
+details.info[open] summary::after{content:"\2013"}
+.info-body{padding:0 0 16px;max-width:62ch}
+.info-body p{margin:0 0 12px}
+.info-body ul{margin:0 0 12px;padding-left:20px}
+.info-body li{margin-bottom:6px}
+.cite{font-size:.88rem;color:var(--muted)}
+
+/* Verdict */
+.verdict{border-radius:6px 22px 6px 6px;padding:26px 24px 22px;margin:4px 0 22px;border-left:8px solid var(--v);background:var(--v-soft)}
+.verdict.clear{--v:var(--clear);--v-soft:var(--clear-soft)}
+.verdict.caution{--v:var(--caution);--v-soft:var(--caution-soft)}
+.verdict.contact{--v:var(--contact);--v-soft:var(--contact-soft)}
+.stamp{display:inline-block;color:var(--v);border:3px solid var(--v);border-radius:6px;padding:4px 12px;font-weight:900;font-size:1rem;letter-spacing:.02em;transform:rotate(-2deg);margin-bottom:14px}
+.verdict h2{font-size:clamp(1.5rem,4.5vw,2rem);line-height:1.15;letter-spacing:-.02em;margin:0 0 10px}
+.verdict p{margin:0 0 10px;max-width:58ch}
+.next h3{font-size:1.05rem;margin:24px 0 8px}
+.next ul{margin:0;padding-left:20px}
+.next li{margin-bottom:8px;max-width:62ch}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 8px}
+.btn{padding:11px 20px;border-radius:999px;border:2px solid var(--ink);background:transparent;font-weight:700;cursor:pointer;text-decoration:none;color:var(--ink)}
+.btn.primary{background:var(--yes);color:var(--yes-ink)}
+.btn:hover{border-color:var(--route)}
+.toast{font-size:.9rem;color:var(--route);min-height:1.4em}
+
+.back{background:none;border:0;padding:0;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-size:.93rem}
+
+/* Reference */
+section.ref{margin-top:56px;border-top:2px solid var(--ink);padding-top:22px}
+section.ref h2{font-size:1.3rem;letter-spacing:-.01em;margin:0 0 6px}
+section.ref .sub{color:var(--muted);margin:0 0 18px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;padding:14px 0;font-weight:700;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq .a{padding:0 0 16px;max-width:62ch}
+.faq .a p{margin:0 0 10px}
+.faq .a ul{margin:0 0 10px;padding-left:20px}
+.links{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
+.links a{font-weight:700}
+.links span{display:block;color:var(--muted);font-size:.9rem}
+
+footer{margin-top:48px;font-size:.85rem;color:var(--muted);max-width:62ch}
+footer p{margin:0 0 8px}
+
+@media (prefers-reduced-motion:no-preference){
+  .enter{animation:enter .28s ease-out}
+  @keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+@media print{
+  header.site .hdr-links,.choices,.actions,.back,section.ref{display:none}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <a class="brand" href="#" id="home">isit<span>commercial</span>.com</a>
+    <nav class="hdr-links" aria-label="Page">
+      <button type="button" id="restartTop">Start over</button>
+      <button type="button" id="jumpRef">Background &amp; FAQ</button>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Is it commercial?</h1>
+    <p class="lede">Moving an endangered or threatened animal across state or national lines? Answer a few questions to see whether the transfer or breeding loan may count as commercial activity under the Endangered Species Act, and whether you may need a USFWS permit.</p>
+
+    <ol class="trail" id="trail" aria-label="Your answers so far"></ol>
+    <div id="stage" aria-live="polite"></div>
+
+    <section class="ref" id="ref" aria-labelledby="refTitle">
+      <h2 id="refTitle">Commercial activity with ESA-listed species</h2>
+      <p class="sub">The questions people ask most about the rules behind this tool.</p>
+      <div class="faq" id="faq"></div>
+      <ul class="links" id="links"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Adapted from the AZA Regulatory Affairs poster “When Is It Commercial? Navigating Endangered Species Transfers and Breeding Loans” by Aislinn Baltas, AZA Coordinator, Regulatory Affairs.</p>
+    <p>This tool is general guidance, not legal advice, and does not replace a determination by the U.S. Fish and Wildlife Service. Other federal, state, or international permits (CITES, Lacey Act, state wildlife permits) may still apply. Questions: <a href="mailto:governmentaffairs@aza.org">governmentaffairs@aza.org</a>.</p>
+  </footer>
+</div>
+
+<script>
+/* ---------- Resources (swap in the poster's QR-code destinations here) ---------- */
+const R = {
+  ecos:   {label:"USFWS ECOS species search", href:"https://ecos.fws.gov/ecp/", note:"Check a species' ESA status and any 4(d) rule."},
+  cfr1721:{label:"50 CFR 17.21", href:"https://www.ecfr.gov/current/title-50/section-17.21", note:"Prohibitions for endangered wildlife."},
+  cfr1731:{label:"50 CFR 17.31", href:"https://www.ecfr.gov/current/title-50/section-17.31", note:"Prohibitions for threatened wildlife (blanket 4(d) rule)."},
+  cfr1012:{label:"50 CFR 10.12", href:"https://www.ecfr.gov/current/title-50/section-10.12", note:"Definitions, including public institutions."},
+  aza:    {label:"Email AZA Regulatory Affairs", href:"mailto:governmentaffairs@aza.org", note:"governmentaffairs@aza.org"}
+};
+const link = k => `<a href="${R[k].href}" target="_blank" rel="noopener">${R[k].label}</a>`;
+
+/* ---------- Shared explanatory blocks ---------- */
+const PERMITS = `
+<p>If a permit is needed, it will usually be one of these:</p>
+<ul>
+  <li><strong>Native species interstate commerce permit</strong> (application form 3-200-60). Single-use.</li>
+  <li><strong>Non-native interstate or foreign commerce permit</strong> (application form 3-200-37d). Single-use.</li>
+  <li><strong>Captive-bred wildlife (CBW) registration</strong> (application form 3-200-41). Both the sender and the receiver must hold a CBW registration for the species.</li>
+</ul>`;
+
+const LOAN_CRITERIA = `
+<p>USFWS treats a breeding loan as <strong>not</strong> commercial only if <em>all</em> of these are true:</p>
+<ul>
+  <li>Both facilities are public not-for-profit institutions (${link('cfr1012')}).</li>
+  <li>Both facilities gain only in the form of intended offspring.</li>
+  <li>The offspring won't be bought, sold, traded, or transferred for gain or profit.</li>
+  <li>Any net profits go to the care of the animal or conservation of the species.</li>
+</ul>
+<p>If a facility isn't a public not-for-profit, a breeding loan that is part of a science-based breeding plan for exclusively non-commercial purposes, such as an AZA Breeding and Transfer Plan, is still not commercial as long as the other criteria are met.</p>`;
+
+/* ---------- Decision tree (faithful to the poster) ---------- */
+const NODES = {
+  listed:{
+    q:"Is the species listed as endangered under the ESA, or as threatened with a Section 4(d) rule that prohibits interstate and foreign commerce?",
+    hint:"Check the species' current listing and whether a species-specific or blanket 4(d) rule applies.",
+    yes:"senderNfp", no:"rNotListed",
+    info:`<p>The commerce prohibition covers species listed as <strong>endangered</strong>, and species listed as <strong>threatened</strong> that have a Section 4(d) rule prohibiting interstate or foreign commerce. That 4(d) rule can be species-specific, or the blanket protections that apply automatically under 50 CFR 17.31 to species listed before August 20, 2026.</p>
+<p>The prohibition only applies to <strong>interstate and foreign</strong> commerce. A move that stays within one state, or that is non-commercial, isn't prohibited under the ESA and doesn't need an ESA permit.</p>
+<p class="cite">ESA Section 9(a)(1)(E); ${link('cfr1721')}; ${link('cfr1731')}. Look up a species: ${link('ecos')}.</p>`
+  },
+  senderNfp:{
+    q:"Is the sender a not-for-profit institution?",
+    hint:"501(c)(3) organizations and government-owned facilities count.",
+    yes:"senderPublic", no:"btp",
+    info:`<p>USFWS's non-commercial breeding loan criteria require both facilities to be <strong>public not-for-profit institutions</strong>. A for-profit sender doesn't end the analysis, but sends you down the Breeding and Transfer Plan path.</p>
+<p class="cite">See the definition of public institutions in ${link('cfr1012')}.</p>`
+  },
+  senderPublic:{
+    q:"Is the sender open to the general public?",
+    hint:"A not-for-profit that isn't open to the public doesn't meet the “public institution” test on its own.",
+    yes:"receiverNfp", no:"btp",
+    info:`<p>Being “public” is part of the test, not just being not-for-profit. A private research or holding facility, even a non-profit one, is evaluated through the Breeding and Transfer Plan question instead.</p>`
+  },
+  receiverNfp:{
+    q:"Is the receiver a not-for-profit institution?",
+    hint:"501(c)(3) organizations and government-owned facilities count.",
+    yes:"receiverPublic", no:"btp",
+    info:`<p>The same tests apply to the receiving facility. Both sides of the transfer need to be public not-for-profit institutions to skip straight to the sale question.</p>`
+  },
+  receiverPublic:{
+    q:"Is the receiver open to the general public?",
+    hint:"",
+    yes:"sold", no:"btp",
+    info:`<p>If both the sender and receiver are public not-for-profit institutions, the remaining question is whether money is changing hands for the animal.</p>`
+  },
+  btp:{
+    q:"Is this move recommended in an AZA Breeding and Transfer Plan or equivalent?",
+    hint:"For example, a Species Survival Plan® recommendation or a comparable science-based program.",
+    yes:"sold", no:"donate",
+    info:`<p>When a facility isn't a public not-for-profit, a move that is part of a science-based breeding plan for exclusively non-commercial purposes, one meant to keep captive populations self-sustaining and as genetically healthy as possible, can still be non-commercial.</p>
+${LOAN_CRITERIA}`
+  },
+  donate:{
+    q:"Are you going to donate the animal?",
+    hint:"A donation is a transfer with no payment, trade, or offspring owed in return.",
+    yes:"rDonate", no:"loanSell",
+    info:`<p>Without a public not-for-profit on both ends or a Breeding and Transfer Plan recommendation, an outright donation is the clearest way to keep a transfer non-commercial.</p>`
+  },
+  loanSell:{
+    q:"Are you going to loan with offspring stipulated, sell, or purchase the animal?",
+    hint:"“Offspring stipulated” means the agreement assigns ownership of some or all offspring.",
+    yes:"rMayBe", no:"rContact",
+    info:`<p>USFWS gives buying, selling, and breeding loans where ownership of offspring is stipulated as examples of activity “in the course of a commercial activity.” A breeding loan may be commercial when the owner sends captive-held listed wildlife to another party in exchange for some or all of the offspring.</p>
+${LOAN_CRITERIA}`
+  },
+  sold:{
+    q:"Is the animal going to be sold or purchased?",
+    hint:"Any exchange of money for the animal itself.",
+    yes:"rMayBe", no:"rClearLoan",
+    info:`<p>Buying and selling are commercial activity. Donations and loans, including loans with offspring stipulated that meet the criteria below, are not.</p>
+${LOAN_CRITERIA}`
+  },
+
+  /* Results */
+  rNotListed:{result:"clear", stamp:"No ESA permit needed",
+    title:"You can donate, loan, loan with offspring stipulated, sell, or purchase the animal without an ESA permit.",
+    body:`<p>The ESA's commerce prohibition doesn't apply to this species.</p>`,
+    next:[ "Other permits may still be required, such as CITES for international moves, Lacey Act requirements, or state wildlife permits.",
+           `Double-check the current listing and any 4(d) rule with ${link('ecos')} before relying on this.` ]},
+  rDonate:{result:"clear", stamp:"Not commercial",
+    title:"This is not commercial activity. You can donate the animal without a permit.",
+    body:`<p>A true donation, with no payment, trade, or offspring owed in return, isn't commerce under the ESA.</p>`,
+    next:[ "Document the donation terms clearly so nothing implies payment or offspring ownership.",
+           "Other permits (CITES, state, or health certificates) may still apply." ]},
+  rClearLoan:{result:"clear", stamp:"Not commercial",
+    title:"This is not commercial activity. You can donate, loan with offspring stipulated, or loan the animal without a permit.",
+    body:`<p>Your path meets the conditions for a non-commercial transfer, provided no one buys or sells the animal.</p>${LOAN_CRITERIA}`,
+    next:[ "Make sure any loan agreement keeps offspring from being bought, sold, traded, or transferred for gain.",
+           "Other permits (CITES, state, or health certificates) may still apply." ]},
+  rMayBe:{result:"caution", stamp:"May be commercial",
+    title:"This may be commercial activity. Contact USFWS with the specifics to find out whether a permit is needed.",
+    body:`<p>Selling, purchasing, or a breeding loan that doesn't meet the non-commercial criteria can require a permit before the animal moves.</p>${PERMITS}`,
+    next:[ "Gather the species, sender, receiver, states or countries involved, and the transfer terms before you contact USFWS.",
+           `Questions about the process can go to ${link('aza')}.` ]},
+  rContact:{result:"contact", stamp:"Ask AZA",
+    title:"Contact AZA Regulatory Affairs.",
+    body:`<p>Your situation doesn't fit the common paths this tool covers. AZA Regulatory Affairs can help you work out whether the move is commercial and what's needed.</p>`,
+    next:[ `Email ${link('aza')} with the species, both facilities, and what kind of transfer you're planning.` ]}
+};
+
+const FAQ = [
+  ["What species does the prohibition apply to?", NODES.listed.info],
+  ["What movement does the prohibition apply to?", `<p>Only interstate and foreign commerce. If the movement is non-commercial or stays within one state, it isn't prohibited under the ESA and you don't need an ESA permit.</p>`],
+  ["What type of permit do I need?", PERMITS],
+  ["Is a breeding loan considered commercial activity?", `<p>Under specific circumstances, yes, and then it must have a permit. According to USFWS, a breeding loan may be commercial if captive-held listed wildlife is sent by the owner to another party in exchange for some or all of the offspring.</p>${LOAN_CRITERIA}`]
+];
+
+/* ---------- State ---------- */
+let path = []; // array of {id, a:'y'|'n'}
+const $ = s => document.querySelector(s);
+const stage = $('#stage'), trail = $('#trail');
+
+function currentId(){
+  let id = 'listed';
+  for (const s of path) id = NODES[id][s.a === 'y' ? 'yes' : 'no'];
+  return id;
+}
+function encode(){ return path.map(s=>s.a).join(''); }
+function decode(h){
+  path = []; let id='listed';
+  for (const c of (h||'')) {
+    if (!'yn'.includes(c) || NODES[id].result) break;
+    path.push({id, a:c}); id = NODES[id][c==='y'?'yes':'no'];
+  }
+}
+function setHash(){
+  const h = encode();
+  history.replaceState(null,'', h ? '#'+h : location.pathname + location.search);
+}
+
+function renderTrail(){
+  trail.innerHTML = path.map((s,i)=>`<li><button type="button" data-i="${i}" aria-label="Change answer: ${NODES[s.id].q}"><span class="q">${NODES[s.id].q}</span><span class="ans">${s.a==='y'?'Yes':'No'}</span></button></li>`).join('');
+  trail.querySelectorAll('button').forEach(b=>b.onclick=()=>{ path = path.slice(0,+b.dataset.i); go(); });
+}
+
+function render(){
+  renderTrail();
+  const id = currentId(), n = NODES[id];
+  const backBtn = path.length ? `<button type="button" class="back" id="back">Back one step</button>` : '';
+  if (!n.result){
+    stage.innerHTML = `<div class="step enter">
+      <p class="stepnum">Question ${path.length+1}</p>
+      <h2 class="question" id="qtext" tabindex="-1">${n.q}</h2>
+      ${n.hint?`<p class="hint">${n.hint}</p>`:''}
+      <div class="choices" role="group" aria-labelledby="qtext">
+        <button type="button" class="choice yes" data-a="y">Yes<kbd aria-hidden="true">Y</kbd></button>
+        <button type="button" class="choice" data-a="n">No<kbd aria-hidden="true">N</kbd></button>
+      </div>
+      <details class="info"><summary>Why this question matters</summary><div class="info-body">${n.info}</div></details>
+      <p>${backBtn}</p></div>`;
+    stage.querySelectorAll('.choice').forEach(b=>b.onclick=()=>answer(b.dataset.a));
+  } else {
+    stage.innerHTML = `<div class="enter">
+      <div class="verdict ${n.result}">
+        <div class="stamp">${n.stamp}</div>
+        <h2 id="qtext" tabindex="-1">${n.title}</h2>
+        ${n.body}
+      </div>
+      <div class="next"><h3>What to do next</h3><ul>${n.next.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="actions">
+        <button type="button" class="btn primary" id="restart">Start a new check</button>
+        <button type="button" class="btn" id="copy">Copy summary</button>
+        <button type="button" class="btn" id="print">Print</button>
+      </div>
+      <p class="toast" id="toast" role="status"></p>
+      <p>${backBtn}</p></div>`;
+    $('#restart').onclick = restart;
+    $('#print').onclick = () => window.print();
+    $('#copy').onclick = copySummary;
+  }
+  const b = $('#back'); if (b) b.onclick = () => { path.pop(); go(); };
+}
+
+function go(focus=true){ setHash(); render(); if (focus){ const q=$('#qtext'); if(q) q.focus({preventScroll:true}); } }
+function answer(a){ const id = currentId(); if (NODES[id].result) return; path.push({id,a}); go(); }
+function restart(){ path=[]; go(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+function copySummary(){
+  const n = NODES[currentId()];
+  const lines = ['Is it commercial? (isitcommercial.com)', ''];
+  path.forEach((s,i)=>lines.push(`${i+1}. ${NODES[s.id].q} ${s.a==='y'?'Yes':'No'}`));
+  lines.push('', 'Result: ' + n.title, '', 'Link: ' + location.href,
+    'General guidance only, not legal advice. Confirm with USFWS or governmentaffairs@aza.org.');
+  const done = () => { $('#toast').textContent = 'Summary copied.'; };
+  const fail = () => { $('#toast').textContent = 'Copy didn’t work here. Select the text on the page instead.'; };
+  if (navigator.clipboard) navigator.clipboard.writeText(lines.join('\n')).then(done, fail); else fail();
+}
+
+document.addEventListener('keydown', e=>{
+  if (e.metaKey||e.ctrlKey||e.altKey) return;
+  const t = e.target.tagName; if (t==='INPUT'||t==='TEXTAREA') return;
+  const k = e.key.toLowerCase();
+  if (k==='y'||k==='n') answer(k);
+  else if ((k==='backspace') && path.length){ e.preventDefault(); path.pop(); go(); }
+});
+
+$('#restartTop').onclick = restart;
+$('#home').onclick = e => { e.preventDefault(); restart(); };
+$('#jumpRef').onclick = () => $('#ref').scrollIntoView({behavior:'smooth'});
+
+$('#faq').innerHTML = FAQ.map(([q,a])=>`<details><summary>${q}</summary><div class="a">${a}</div></details>`).join('');
+$('#links').innerHTML = Object.values(R).map(r=>`<li><a href="${r.href}" target="_blank" rel="noopener">${r.label}</a><span>${r.note}</span></li>`).join('');
+
+window.addEventListener('hashchange', ()=>{ decode(location.hash.slice(1)); render(); });
+decode(location.hash.slice(1));
+render();
+</script>
+</body>
+</html>
