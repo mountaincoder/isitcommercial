@@ -7,45 +7,49 @@
 <meta name="description" content="Copy the code to put the ESA commercial-activity decision tree on your own website.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F3F5F2; --card:#FFFFFF; --ink:#13261F; --muted:#56675F; --line:#D5DDD8;
-  --route:#2F6B4F; --route-soft:#E3EEE7; --code:#13261F; --code-ink:#E3EEE7;
-  --focus:#2F6B4F;
+  --paper:#FFFFFF; --card:#FFFFFF; --ink:#222222; --muted:#5F5752; --line:#DDD7D1;
+  --head:#00345B; --route:#004C54; --route-soft:#E1EEEF; --link:#C4452A;
+  --accent:#CD4929; --accent-ink:#FFFFFF; --code:#00343A; --code-ink:#E1EEEF;
+  --focus:#007A87;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#0F1A16; --card:#16241F; --ink:#E6EEE9; --muted:#9DB0A6; --line:#2A3B34;
-    --route:#7CC39C; --route-soft:#1D3229; --code:#0A120F; --code-ink:#CFE3D7; --focus:#7CC39C;
+    --paper:#0D1B24; --card:#14262F; --ink:#E9EDF0; --muted:#A5B1B8; --line:#2A3C47;
+    --head:#C9DCEC; --route:#5CBFC8; --route-soft:#15323A; --link:#F28E74;
+    --accent:#E0684B; --accent-ink:#1A0D08; --code:#081219; --code-ink:#CFE6E8; --focus:#5CBFC8;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0F1A16; --card:#16241F; --ink:#E6EEE9; --muted:#9DB0A6; --line:#2A3B34;
-  --route:#7CC39C; --route-soft:#1D3229; --code:#0A120F; --code-ink:#CFE3D7; --focus:#7CC39C;
+  --paper:#0D1B24; --card:#14262F; --ink:#E9EDF0; --muted:#A5B1B8; --line:#2A3C47;
+  --head:#C9DCEC; --route:#5CBFC8; --route-soft:#15323A; --link:#F28E74;
+  --accent:#E0684B; --accent-ink:#1A0D08; --code:#081219; --code-ink:#CFE6E8; --focus:#5CBFC8;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{color-scheme:light dark}
-body{margin:0;background:var(--paper);color:var(--ink);
-  font:400 1rem/1.55 "Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-a{color:var(--route)}
+body{margin:0;background:var(--paper);color:var(--ink);border-top:6px solid var(--route);
+  font:400 1rem/1.55 "Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--link);font-weight:700;text-decoration:none}
+a:hover{text-decoration:underline}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
 .wrap{max-width:1120px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
 .back{display:inline-block;margin-bottom:1.75rem;font-weight:500;text-decoration:none}
 .back:hover{text-decoration:underline}
-h1{font-weight:900;font-size:clamp(2rem,5vw,3.1rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 .75rem;max-width:18ch}
+h1{font-family:"Crimson Pro",Georgia,"Times New Roman",serif;font-weight:700;color:var(--head);font-size:clamp(2.2rem,5.5vw,3.4rem);line-height:1.05;letter-spacing:-.01em;margin:0 0 .75rem;max-width:18ch}
 .lede{color:var(--muted);font-size:1.125rem;max-width:60ch;margin:0 0 2.5rem}
 
 .grid{display:grid;gap:2.5rem;grid-template-columns:minmax(0,1fr)}
 @media (min-width:900px){.grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
 
-h2{font-size:1.25rem;font-weight:700;margin:0 0 1rem}
+h2{font-size:1.25rem;font-weight:800;color:var(--head);margin:0 0 1rem}
 fieldset{border:0;padding:0;margin:0 0 1.5rem}
-legend{font-weight:700;padding:0;margin-bottom:.5rem}
+legend{font-weight:700;color:var(--head);padding:0;margin-bottom:.5rem}
 .choices{display:flex;flex-wrap:wrap;gap:.5rem}
 .choices label{display:flex;align-items:center;gap:.5rem;padding:.55rem .85rem;
   border:1.5px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer;font-weight:500}
@@ -62,7 +66,7 @@ pre{margin:0;background:var(--code);color:var(--code-ink);border-radius:12px;
   padding:1.1rem 1.1rem 3.6rem;overflow-x:auto;font:400 .8125rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   white-space:pre}
 .copy{position:absolute;left:1.1rem;bottom:1rem;font:700 .9375rem/1 inherit;font-family:inherit;
-  padding:.65rem 1.1rem;border:0;border-radius:999px;background:var(--route);color:var(--paper);cursor:pointer}
+  padding:.65rem 1.1rem;border:0;border-radius:999px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
 .copy:hover{filter:brightness(1.08)}
 .status{min-height:1.5em;color:var(--muted);font-size:.9375rem;margin:.6rem 0 0}
 
