@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Is it commercial? ESA transfers and breeding loans</title>
 <meta name="description" content="Step through whether moving an ESA-listed animal across state or national lines counts as commercial activity, and whether you may need a USFWS permit.">
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  if (!p.has("embed")) return;
+  var d = document.documentElement;
+  d.classList.add("is-embed");
+  var t = p.get("theme");
+  if (t === "light" || t === "dark") d.setAttribute("data-theme", t);
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -17,6 +27,7 @@
   --contact:#33539A; --contact-soft:#E2E8F5;
   --yes:#13261F; --yes-ink:#FFFFFF;
   --focus:#2F6B4F;
+  color-scheme:light;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -29,6 +40,7 @@
     --caution:#F0A27A; --caution-soft:#3A2419;
     --contact:#9DB4EC; --contact-soft:#1E2840;
     --yes:#E6EEE9; --yes-ink:#0F1A16; --focus:#7CC39C;
+    color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
@@ -38,6 +50,7 @@
   --caution:#F0A27A; --caution-soft:#3A2419;
   --contact:#9DB4EC; --contact-soft:#1E2840;
   --yes:#E6EEE9; --yes-ink:#0F1A16; --focus:#7CC39C;
+  color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:inherit}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -131,6 +144,15 @@ footer p{margin:0 0 8px}
   .enter{animation:enter .28s ease-out}
   @keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
+/* Embed mode (?embed=1): just the tool, inside someone else's iframe */
+.embed-open{display:none}
+html.is-embed, html.is-embed body { height:auto; min-height:0; background:transparent; }
+html.is-embed { padding-top:0; padding-bottom:0; } /* no safe-area padding inside a frame */
+html.is-embed .wrap{max-width:none;padding:16px 16px 12px}
+html.is-embed header.site, html.is-embed h1, html.is-embed .lede, html.is-embed section.ref{display:none}
+html.is-embed .embed-open{display:block;text-align:right;font-size:.85rem;margin:0 0 10px}
+html.is-embed footer{margin-top:28px;font-size:.78rem}
+
 @media print{
   header.site .hdr-links,.choices,.actions,.back,section.ref{display:none}
   body{background:#fff}
@@ -148,6 +170,7 @@ footer p{margin:0 0 8px}
   </header>
 
   <main>
+    <a class="embed-open" id="openFull" href="https://isitcommercial.com/" target="_blank" rel="noopener">Open full site</a>
     <h1>Is it commercial?</h1>
     <p class="lede">Moving an endangered or threatened animal across state or national lines? Answer a few questions to see whether the transfer or breeding loan may count as commercial activity under the Endangered Species Act, and whether you may need a USFWS permit.</p>
 
@@ -165,6 +188,7 @@ footer p{margin:0 0 8px}
   <footer>
     <p>Adapted from the AZA Regulatory Affairs poster “When Is It Commercial? Navigating Endangered Species Transfers and Breeding Loans” by Aislinn Baltas, AZA Coordinator, Regulatory Affairs.</p>
     <p>This tool is general guidance, not legal advice, and does not replace a determination by the U.S. Fish and Wildlife Service. Other federal, state, or international permits (CITES, Lacey Act, state wildlife permits) may still apply. Questions: <a href="mailto:governmentaffairs@aza.org">governmentaffairs@aza.org</a>.</p>
+    <p><a href="embed.html">Embed this tool on your site</a></p>
   </footer>
 </div>
 
@@ -316,7 +340,10 @@ function decode(h){
 function setHash(){
   const h = encode();
   history.replaceState(null,'', h ? '#'+h : location.pathname + location.search);
+  updateOpenFull();
 }
+function updateOpenFull(){ $('#openFull').href = 'https://isitcommercial.com/' + location.hash; }
+const isEmbed = () => document.documentElement.classList.contains('is-embed');
 
 function renderTrail(){
   trail.innerHTML = path.map((s,i)=>`<li><button type="button" data-i="${i}" aria-label="Change answer: ${NODES[s.id].q}"><span class="q">${NODES[s.id].q}</span><span class="ans">${s.a==='y'?'Yes':'No'}</span></button></li>`).join('');
@@ -363,7 +390,7 @@ function render(){
 
 function go(focus=true){ setHash(); render(); if (focus){ const q=$('#qtext'); if(q) q.focus({preventScroll:true}); } }
 function answer(a){ const id = currentId(); if (NODES[id].result) return; path.push({id,a}); go(); }
-function restart(){ path=[]; go(); window.scrollTo({top:0,behavior:'smooth'}); }
+function restart(){ path=[]; go(); if (!isEmbed()) window.scrollTo({top:0,behavior:'smooth'}); }
 
 function copySummary(){
   const n = NODES[currentId()];
@@ -386,14 +413,40 @@ document.addEventListener('keydown', e=>{
 
 $('#restartTop').onclick = restart;
 $('#home').onclick = e => { e.preventDefault(); restart(); };
-$('#jumpRef').onclick = () => $('#ref').scrollIntoView({behavior:'smooth'});
+$('#jumpRef').onclick = () => { if (!isEmbed()) $('#ref').scrollIntoView({behavior:'smooth'}); };
 
 $('#faq').innerHTML = FAQ.map(([q,a])=>`<details><summary>${q}</summary><div class="a">${a}</div></details>`).join('');
 $('#links').innerHTML = Object.values(R).map(r=>`<li><a href="${r.href}" target="_blank" rel="noopener">${r.label}</a><span>${r.note}</span></li>`).join('');
 
-window.addEventListener('hashchange', ()=>{ decode(location.hash.slice(1)); render(); });
+window.addEventListener('hashchange', ()=>{ decode(location.hash.slice(1)); render(); updateOpenFull(); });
 decode(location.hash.slice(1));
 render();
+updateOpenFull();
+</script>
+<script>
+(function(){
+  if (!document.documentElement.classList.contains("is-embed")) return;
+  if (window.parent === window) return;
+
+  // Links that leave the tool open in a new tab instead of inside the frame
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a) return;
+    var u = new URL(a.href, location.href);
+    var inPage = u.origin === location.origin && u.pathname === location.pathname && u.hash;
+    if (!inPage) { a.target = "_blank"; a.rel = "noopener"; }
+  }, true);
+
+  // Tell the host page how tall the content is
+  var last = 0;
+  function send(){
+    var h = Math.ceil(document.body.getBoundingClientRect().height);
+    if (h !== last) { last = h; parent.postMessage({ type: "isitcommercial:height", height: h }, "*"); }
+  }
+  new ResizeObserver(send).observe(document.body);
+  window.addEventListener("load", send);
+  window.addEventListener("hashchange", function(){ setTimeout(send, 50); });
+})();
 </script>
 </body>
 </html>

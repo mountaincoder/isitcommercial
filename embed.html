@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Embed Is it commercial? on your site</title>
+<meta name="description" content="Copy the code to put the ESA commercial-activity decision tree on your own website.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3F5F2; --card:#FFFFFF; --ink:#13261F; --muted:#56675F; --line:#D5DDD8;
+  --route:#2F6B4F; --route-soft:#E3EEE7; --code:#13261F; --code-ink:#E3EEE7;
+  --focus:#2F6B4F;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1A16; --card:#16241F; --ink:#E6EEE9; --muted:#9DB0A6; --line:#2A3B34;
+    --route:#7CC39C; --route-soft:#1D3229; --code:#0A120F; --code-ink:#CFE3D7; --focus:#7CC39C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1A16; --card:#16241F; --ink:#E6EEE9; --muted:#9DB0A6; --line:#2A3B34;
+  --route:#7CC39C; --route-soft:#1D3229; --code:#0A120F; --code-ink:#CFE3D7; --focus:#7CC39C;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{color-scheme:light dark}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:400 1rem/1.55 "Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--route)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+.wrap{max-width:1120px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+.back{display:inline-block;margin-bottom:1.75rem;font-weight:500;text-decoration:none}
+.back:hover{text-decoration:underline}
+h1{font-weight:900;font-size:clamp(2rem,5vw,3.1rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 .75rem;max-width:18ch}
+.lede{color:var(--muted);font-size:1.125rem;max-width:60ch;margin:0 0 2.5rem}
+
+.grid{display:grid;gap:2.5rem;grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}}
+
+h2{font-size:1.25rem;font-weight:700;margin:0 0 1rem}
+fieldset{border:0;padding:0;margin:0 0 1.5rem}
+legend{font-weight:700;padding:0;margin-bottom:.5rem}
+.choices{display:flex;flex-wrap:wrap;gap:.5rem}
+.choices label{display:flex;align-items:center;gap:.5rem;padding:.55rem .85rem;
+  border:1.5px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer;font-weight:500}
+.choices input{accent-color:var(--route);margin:0}
+.choices label:has(input:checked){border-color:var(--route);background:var(--route-soft)}
+.note{color:var(--muted);font-size:.9375rem;margin:.5rem 0 0;max-width:52ch}
+.height{display:flex;align-items:center;gap:.5rem;margin-top:.75rem}
+.height input{width:6.5rem;padding:.5rem .6rem;font:inherit;color:var(--ink);
+  background:var(--card);border:1.5px solid var(--line);border-radius:8px}
+.height[hidden]{display:none}
+
+.codebox{position:relative;margin-top:.5rem}
+pre{margin:0;background:var(--code);color:var(--code-ink);border-radius:12px;
+  padding:1.1rem 1.1rem 3.6rem;overflow-x:auto;font:400 .8125rem/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  white-space:pre}
+.copy{position:absolute;left:1.1rem;bottom:1rem;font:700 .9375rem/1 inherit;font-family:inherit;
+  padding:.65rem 1.1rem;border:0;border-radius:999px;background:var(--route);color:var(--paper);cursor:pointer}
+.copy:hover{filter:brightness(1.08)}
+.status{min-height:1.5em;color:var(--muted);font-size:.9375rem;margin:.6rem 0 0}
+
+.preview{position:sticky;top:calc(1rem + env(safe-area-inset-top,0px))}
+.frame{border:1.5px dashed var(--line);border-radius:14px;padding:.75rem;background:
+  repeating-linear-gradient(135deg,transparent 0 10px,color-mix(in srgb,var(--line) 35%,transparent) 10px 11px)}
+.frame iframe{display:block;width:100%;height:640px;border:0;border-radius:8px;background:var(--card);transition:height .2s ease}
+.frame-cap{color:var(--muted);font-size:.875rem;margin:.6rem 0 0}
+
+.terms{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);max-width:68ch}
+.terms h2{font-size:1.0625rem}
+.terms ul{margin:0;padding-left:1.2rem;color:var(--muted)}
+.terms li{margin:.35rem 0}
+
+@media (prefers-reduced-motion:reduce){.frame iframe{transition:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="./">Back to the decision tree</a>
+  <h1>Put the decision tree on your site</h1>
+  <p class="lede">Paste this code into any web page and visitors can step through the ESA transfer and breeding loan questions without leaving your site. It stays current as we update the guidance.</p>
+
+  <div class="grid">
+    <section aria-labelledby="opts">
+      <h2 id="opts">Set it up</h2>
+
+      <fieldset>
+        <legend>Height</legend>
+        <div class="choices">
+          <label><input type="radio" name="size" value="auto" checked> Grow to fit</label>
+          <label><input type="radio" name="size" value="fixed"> Fixed height</label>
+        </div>
+        <p class="note" id="sizeNote">The frame resizes itself as questions open and close. Your page needs to allow a short script.</p>
+        <div class="height" id="heightRow" hidden>
+          <label for="h">Height in pixels</label>
+          <input id="h" type="number" min="360" max="2000" step="20" value="720" inputmode="numeric">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Colors</legend>
+        <div class="choices">
+          <label><input type="radio" name="theme" value="auto" checked> Match visitor's setting</label>
+          <label><input type="radio" name="theme" value="light"> Always light</label>
+          <label><input type="radio" name="theme" value="dark"> Always dark</label>
+        </div>
+      </fieldset>
+
+      <h2 id="codeLabel">Copy the code</h2>
+      <div class="codebox">
+        <pre id="code" tabindex="0" aria-labelledby="codeLabel"></pre>
+        <button class="copy" id="copy" type="button">Copy code</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="preview" aria-labelledby="pv">
+      <h2 id="pv">Preview</h2>
+      <div class="frame">
+        <iframe id="preview" title="Preview of the embedded decision tree" loading="lazy"></iframe>
+      </div>
+      <p class="frame-cap">This is how it will look inside your page. Try answering a few questions.</p>
+    </section>
+  </div>
+
+  <section class="terms" aria-labelledby="t">
+    <h2 id="t">Before you embed</h2>
+    <ul>
+      <li>The embedded tool keeps its credit to the AZA poster and its note that it isn't legal advice. Please leave those in place.</li>
+      <li>Links inside the tool open in a new tab, so visitors don't lose your page.</li>
+      <li>A visitor's answers stay in their browser. Nothing is sent to us or to your site.</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+(function(){
+  var SITE = "https://isitcommercial.com/";
+  var MSG = "isitcommercial:height";
+  var codeEl = document.getElementById("code");
+  var preview = document.getElementById("preview");
+  var heightRow = document.getElementById("heightRow");
+  var sizeNote = document.getElementById("sizeNote");
+  var hInput = document.getElementById("h");
+  var status = document.getElementById("status");
+  var lastSrc = "";
+
+  function val(name){ return document.querySelector('input[name="'+name+'"]:checked').value; }
+  function clampH(){ var n = parseInt(hInput.value,10); if(isNaN(n)) n = 720; return Math.min(2000, Math.max(360, n)); }
+  function query(theme){ return "?embed=1" + (theme === "auto" ? "" : "&theme=" + theme); }
+
+  function build(){
+    var size = val("size"), theme = val("theme"), h = clampH();
+    var src = SITE + query(theme);
+    var lines = [
+      '<iframe id="isitcommercial" src="' + src + '"',
+      '  title="Is it commercial? ESA transfer and breeding loan decision tree"',
+      '  style="display:block;width:100%;max-width:760px;height:' + (size === "auto" ? 640 : h) + 'px;border:0"',
+      '  loading="lazy"></iframe>'
+    ];
+    if(size === "auto"){
+      lines.push(
+        '<script>',
+        'window.addEventListener("message", function (e) {',
+        '  if (e.origin !== "https://isitcommercial.com") return;',
+        '  if (e.data && e.data.type === "' + MSG + '") {',
+        '    document.getElementById("isitcommercial").style.height = e.data.height + "px";',
+        '  }',
+        '});',
+        '</scr' + 'ipt>'
+      );
+    }
+    codeEl.textContent = lines.join("\n");
+
+    heightRow.hidden = size !== "fixed";
+    sizeNote.textContent = size === "auto"
+      ? "The frame resizes itself as questions open and close. Your page needs to allow a short script."
+      : "Use this if your site doesn't allow scripts. Pick a height that fits the longest answer; the frame scrolls if it needs more.";
+
+    // Preview loads from this same site so it also works before the domain is live
+    var pSrc = "./" + query(theme);
+    if(pSrc !== lastSrc){ preview.src = pSrc; lastSrc = pSrc; }
+    if(size === "fixed") preview.style.height = h + "px";
+    status.textContent = "";
+  }
+
+  window.addEventListener("message", function(e){
+    if(e.source !== preview.contentWindow) return;
+    if(val("size") !== "auto") return;
+    if(e.data && e.data.type === MSG && typeof e.data.height === "number"){
+      preview.style.height = Math.max(320, Math.ceil(e.data.height)) + "px";
+    }
+  });
+
+  document.querySelectorAll('input[name="size"],input[name="theme"]').forEach(function(r){ r.addEventListener("change", build); });
+  hInput.addEventListener("input", build);
+  hInput.addEventListener("blur", function(){ hInput.value = clampH(); build(); });
+
+  document.getElementById("copy").addEventListener("click", function(){
+    var text = codeEl.textContent;
+    function done(){ status.textContent = "Copied. Paste it into your page's HTML where you want the tool to appear."; }
+    function fallback(){
+      var r = document.createRange(); r.selectNodeContents(codeEl);
+      var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand("copy") ? done() : (status.textContent = "Code selected. Press Ctrl+C (or Cmd+C) to copy."); }
+      catch(_) { status.textContent = "Code selected. Press Ctrl+C (or Cmd+C) to copy."; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, fallback); }
+    else fallback();
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>
